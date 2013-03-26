@@ -29,10 +29,13 @@ But with every project delivered, we documented and trained our customers how to
 Birds Eye View
 ==============
 
-1. Describe your servers and services (a role like docproc, indexer, admin) in a XML file. You can have mutliple layout definitions for your stages (dev, staging, production)
-2. Describe your deployment organized by tasks (like pipeline, xmlpatch, overlay) and associate them with the services
+1. Describe
+  * Describe your servers and services (a role like docproc, indexer, admin) in a XML file. You can have mutliple layout definitions for your stages (dev, staging, production)
+  * Describe your deployment organized by tasks (like pipeline, xmlpatch, overlay) and associate them with the services
+2. Execute
+  * Install ESP based on one layout configuration
+  * Patch ESP with latest Service Packs and hotfixes
+  * Deploy offline customizations (ESP not started)
+  * Deploy online customizations (ESP started)
+ 
 
-a. Install ESP based on one layout configuration
-b. Patch ESP with latest Service Packs and hotfixes
-c. Deploy offline customizations (ESP not started)
-d. Deploy online customizations (ESP started)
