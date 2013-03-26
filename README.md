@@ -26,7 +26,7 @@ But with every project delivered, we documented and trained our customers how to
 * disaster recovery scenarios
 * Maintenance upgrades (Hotfixes, SP, index-profile, additional nodes, code changes, etc...)
 
-Birds Eye View
+Bird's Eye View
 ==============
 
 1. Describe
