@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<InstallerConfig>
+<!-- 
+
+ESP Deployment central pipeline patch tasks
+
+Author: Peter Arwanitis, Dr. Krusche & Partner PartG
+Date: 2013/02/04
+Revision: 1.0
+
+Copyright (C) 2013
+Dr. Krusche & Partner PartG
+
+:Comments: 
+    initial espdeploy configuration for espdeploy-cookbook
+:Changelog:
+    130327 pa   initial setup
+
+-->
+
+<PipelineConfig group="configuration-service"
+		remove-pipelines="no" desc="Setup pipelines">
+
+    <processor name="CookbookDemoLangAssigner" type="general" hidden="0">
+      <load module="processors.Basic" class="AttributeAssigner"/>
+      <config>
+        <param name="Attribute" value="language" type="str"/>
+        <param name="Value" value="en" type="str"/>
+      </config>
+      <description><![CDATA[language=en]]></description>
+      <inputs>
+      </inputs>
+    </processor>
+
+    <pipeline name="cookbookdemo (webcluster)" default="0">
+      <description><![CDATA[Demo pipeline with one additional stage]]></description>
+      <priority>0</priority>
+      <processor name="DocInit"/>
+      <processor name="DocumentRetriever"/>
+      <processor name="URLProcessor"/>
+      <processor name="Decompressor"/>
+      <processor name="FormatDetector"/>
+      <processor name="SimpleConverter"/>
+      <processor name="FlashConverter"/>
+      <processor name="PDFConverter"/>
+      <processor name="XPSConverter"/>
+      <processor name="SearchExportConverter"/>
+      <processor name="LanguageAndEncodingDetector"/>
+      <processor name="CookbookDemoLangAssigner"/>
+      <processor name="EncodingNormalizer"/>
+      <processor name="FastHTMLParser"/>
+      <processor name="TeaserGenerator"/>
+      <processor name="Tokenizer(webcluster)"/>
+      <processor name="SentenceBoundaryDetector"/>
+      <processor name="PersonExtractorWhiteListSpecific"/>
+      <processor name="PersonExtractorWhiteListAny"/>
+      <processor name="CompanyExtractorWhiteListSpecific"/>
+      <processor name="CompanyExtractorWhiteListAny"/>
+      <processor name="LocationExtractorWhiteListSpecific"/>
+      <processor name="LocationExtractorWhiteListAny"/>
+      <processor name="EmailExtractor"/>
+      <processor name="DateExtractor"/>
+      <processor name="TimeExtractor"/>
+      <processor name="URLExtractor"/>
+      <processor name="JobTitleExtractor"/>
+      <processor name="UniversityExtractor"/>
+      <processor name="PersonExtractor1"/>
+      <processor name="PersonExtractor2"/>
+      <processor name="AirlineExtractor"/>
+      <processor name="CompanyExtractor1"/>
+      <processor name="CompanyExtractor2"/>
+      <processor name="LocationExtractor1"/>
+      <processor name="QuotationExtractor"/>
+      <processor name="AcronymExtractor1"/>
+      <processor name="AcronymExtractor2"/>
+      <processor name="StatementExtractor"/>
+      <processor name="UttererExtractor"/>
+      <processor name="TickerExtractor1"/>
+      <processor name="TickerExtractor2"/>
+      <processor name="TickerExtractor3"/>
+      <processor name="PriceExtractor"/>
+      <processor name="PhoneNumberExtractor"/>
+      <processor name="USZipCodeExtractor"/>
+      <processor name="USNewspaperExtractor"/>
+      <processor name="SubstanceExtractor"/>
+      <processor name="CarExtractor"/>
+      <processor name="FilenameExtractor"/>
+      <processor name="ISBNExtractor"/>
+      <processor name="MeasurementExtractor"/>
+      <processor name="TeamExtractor1"/>
+      <processor name="TeamExtractor2"/>
+      <processor name="DegreeExtractor"/>
+      <processor name="OSExtractor"/>
+      <processor name="StreetExtractor"/>
+      <processor name="UppercaseExtractor"/>
+      <processor name="POSTagger"/>
+      <processor name="npExtractor0"/>
+      <processor name="npExtractor1"/>
+      <processor name="EntityVectorizer"/>
+      <processor name="Vectorizer(webcluster)"/>
+      <processor name="Scopifier"/>
+      <processor name="SemanticLemmatizer"/>
+      <processor name="SemanticXMLifier"/>
+      <processor name="DateTimeNormalizer(webcluster)"/>
+      <processor name="DateTimeSelector(webcluster)"/>
+      <processor name="MapperTransformer"/>
+      <processor name="RankTuner"/>
+      <processor name="DocumentSecurityUnknown"/>
+      <processor name="FIXMLGenerator"/>
+      <processor name="DictServiceOutput"/>
+      <processor name="RTSOutput"/>
+    </pipeline>
+
+	</PipelineConfig>
+</InstallerConfig>

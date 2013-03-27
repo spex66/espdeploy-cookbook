@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<install-profile>
+<!-- 
+
+Additional ESP Service Set definitions
+Author: Peter Arwanitis, Dr. Krusche & Partner PartG
+Date: 2013/02/04
+Revision: 1.0
+
+Copyright (C) 2013
+Dr. Krusche & Partner PartG
+
+:Comments: 
+    initial espdeploy configuration for espdeploy-cookbook
+:Changelog:
+    130327 pa   initial setup
+
+-->
+
+<!-- Define service set to align deployment tasks to server nodes -->
+  <service-set name="unity-processor" />
+  <service-set name="top-fdispatch" />
+  <service-set name="perfect-master" />
+  <service-set name="perfect-slave" />
+</install-profile>

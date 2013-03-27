@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<InstallerConfig>
+<!-- 
+
+ESP Deployment central patch tasks
+
+Author: Peter Arwanitis, Dr. Krusche & Partner PartG
+Date: 2013/02/04
+Revision: 1.0
+
+Copyright (C) 2013
+Dr. Krusche & Partner PartG
+
+:Comments: 
+    initial espdeploy configuration for espdeploy-cookbook
+:Changelog:
+    130327 pa   initial setup
+
+-->
+
+    <!-- delete demo stage 'definition' from default QRServer pipeline -->
+    <XmlPatch group="admin-service" file="etc/config_data/QRServer/webcluster/etc/qrserver/qtf-config.xml" desc="Remove definition from scopesearch pipeline">
+        <sub-tree path="/qtf/pipeline-list/pipeline[ @name='scopesearch' ]" >
+            <del-node path="instance-ref[ @name='definition' ]" />
+        </sub-tree>
+    </XmlPatch>
+
+    <!-- rearrange all nctrl startorders regarding their services -->
+    <XmlPatch group="all"          file="etc/NodeConf.xml" desc="Update startorder">
+        <sub-tree path="/nodes/node/global/startorder">
+            <del-node group="all"                     path="*" />
+            <update   group="all"                     value="\n" />
+            <add-node group="name-service"            indent="16" name="proc" value="nameservice" />
+            <add-node group="admin-service"           indent="16" name="proc" value="httpd" />
+            <add-node group="license-service"         indent="16" name="proc" value="lmgrd" />
+            <add-node group="admin-service"           indent="16" name="proc" value="logserver" />
+            <add-node group="admin-service"           indent="16" name="proc" value="configserver" />
+            <add-node group="admin-service"           indent="16" name="proc" value="storageservice" />
+            <add-node group="admin-service"           indent="16" name="proc" value="adminserver" />
+            <add-node group="admin-service"           indent="16" name="proc" value="resourceservice" />
+            <add-node group="content-distributor"     indent="16" name="proc" value="contentdistributor" />
+
+            <add-node group="admin-service"           indent="16" name="proc" value="cachemanager" />
+            <add-node group="crawler"                 indent="16" name="proc" value="crawler" />
+            <add-node group="crawler"                 indent="16" name="proc" value="browserengine" />
+            <!-- xxx pa 130327 crawler is always installed on admin node, 
+                               that way we can setup webanalyzer on admin node only if crawler available
+            -->
+            <add-node group="crawler"                 indent="16" name="proc" value="webanalyzer" />
+            <add-node group="crawler"                 indent="16" name="proc" value="fdmworker" />
+            <add-node group="crawler"                 indent="16" name="proc" value="walookupdb0" />
+            <add-node group="crawler"                 indent="16" name="proc" value="walinkstorerreceiver" />
+
+            <add-node group="admin-service"           indent="16" name="proc" value="logtransformer" />
+            
+            <add-node group="indexing-dispatcher"     indent="16" name="proc" value="indexingdispatcher" />
+            <add-node group="search-engine-index"     indent="16" name="proc" value="indexer" />
+            <add-node group="search-engine-search"    indent="16" name="proc" value="search-1" />
+            <add-node group="query-result-processor"  indent="16" name="proc" value="qrserver" />
+            <add-node group="query-result-processor"  indent="16" name="proc" value="completionserver" />
+            <add-node group="top-fdispatch"           indent="16" name="proc" value="topfdispatch" />
+
+
+            <add-node group="all"                     indent="16" name="proc" value="nctrl" />
+            <add-node group="admin-service"           indent="16" name="proc" value="clarity_webcluster" />
+
+            <!-- add unity for federation -->
+            <add-node group="unity-processor"         indent="16" name="proc" value="unity" />
+
+
+            <append   indent="12" />
+        </sub-tree>
+
+
+    </XmlPatch>
+
+</InstallerConfig>

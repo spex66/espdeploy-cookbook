@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<install-profile>
+
+<!-- 
+
+ESP Installation Profile for Single Node Installation
+Author: Peter Arwanitis, Dr. Krusche & Partner PartG
+Date: 2013/02/04
+Revision: 1.0
+
+Copyright (C) 2013
+Dr. Krusche & Partner PartG
+
+:Comments: 
+    initial espdeploy configuration for espdeploy-cookbook
+:Changelog:
+    130327 pa   initial setup
+
+-->
+    <Include file="include/service-sets.xml" desc="Define service sets" />
+
+<!-- Define Our Environment -->
+
+    <!-- The local directory containing setup.bin and setup.jar -->
+    <environ name="JAVA_HOME"     value="C:\java\jre6"/>
+
+    <!-- The local directory containing setup.bin and setup.jar -->
+    <environ name="ESP_RELEASE_DIR"     value="$ESP_DEPLOY_DIR/release53"/>
+    
+    <!-- The directory to install FAST ESP to -->
+    <environ name="ESP_HOME_DIR"        value="c:"/>
+    <environ name="ESP_INSTALL_DIR"     value="$ESP_HOME_DIR/esp"/>
+    
+    <!-- The local path the the license file -->
+    <environ name="ESP_LICENSE_FILE"    value="$ESP_DEPLOY_DIR/fastsearch.lic"/>
+    
+    <!-- The baseport for FAST ESP -->
+    <environ name="ESP_BASEPORT"        value="13000"/>
+
+    <!-- The platform to install to -->
+    <environ name="ESP_PLATFORM"        value="Windows"/>
+
+    <!-- The ESP Version to install (4 or 5) -->
+    <environ name="ESP_VERSION" value="5.3.0"/>    
+
+    <!-- The remote command to use (could be ignored on Windows) -->
+    <environ name="ESP_REMOTE_CMD"      value="SSH2"/> 
+
+    <!-- The tempdir for the installer to use -->
+    <environ name="ESP_TEMP_DIR"        value="$ESP_HOME_DIR/tmp"/>
+
+    <!-- The username to install as -->
+    <environ name="ESP_USERNAME"        value="HOSTNAME1\fast"/>
+    <environ name="ESP_ROOT_USERNAME"   value="HOSTNAME1\fast"/>
+    <environ name="ESP_ROOT_PASSWORD"   value="P@ssw0rd"/>
+    
+    <!-- The local path to the deployment config -->
+    <environ name="ESP_DEPLOY_CONFIG"   value="$ESP_DEPLOY_DIR/deploy_tasklist.xml"/>
+
+    <environ name="ESP_INDEX_PROFILE_NAME"      value="index-profile-5.3-custom.xml"/>
+    <environ name="ESP_INDEX_PROFILE"   value="$ESP_DEPLOY_DIR/index-profiles/$ESP_INDEX_PROFILE_NAME"/>
+
+    <!-- LANGUAGES -->
+    <environ name="ESP_QR_DEFAULT_LANG" value="en"/>
+    <environ name="ESP_QR_LANGUAGES"    value="en,de,fr,es"/>
+
+
+    <host name="hostname1.lan" 
+          service-sets="docproc, admin, license, cd-master, name-service" 
+          indexing-dispatcher="true" 
+          query="true" 
+          index="true" 
+          search="true" 
+          column="0" 
+          row="0" >
+        <webanalyzer-master />
+        <webanalyzer-worker />
+        <webanalyzer-lookup />
+    </host>           
+    <!-- End of host definition -->
+</install-profile>

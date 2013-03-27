@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<InstallerConfig>
+<!-- 
+
+ESP Deployment tasklist
+Author: Peter Arwanitis, Dr. Krusche & Partner PartG
+Date: 2013/02/04
+Revision: 1.0
+
+Copyright (C) 2013
+Dr. Krusche & Partner PartG
+
+:Comments: 
+    initial espdeploy configuration for espdeploy-cookbook
+:Changelog:
+    130327 pa   initial setup
+
+-->
+
+    <Overlay group="all"             overlay="$ESP_DEPLOY_DIR/overlay/esp.zip"          desc="ESP overlay" />
+    
+    <Include file="include/esppatch.xml"            desc="Misc patching of files"/>
+    <Include file="include/pipelineconfig.xml"      desc="Patching for Pipeline Configuration"/>
+    
+   
+	    
+</InstallerConfig>
+

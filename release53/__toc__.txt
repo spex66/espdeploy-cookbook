@@ -1,0 +1,13 @@
+This folder contains unpacked ESP setup and some additional folders for patches
+Download ESP from https://connect.microsoft.com/fastsearch
+Unpack setup_WindowsNT.zip to this folder.
+
+data/
+patches/
+patchesdeployed/
+updates/
+lmhostid.exe
+remotesetup.exe
+setup.exe
+setup.jar
+VERSION.xml

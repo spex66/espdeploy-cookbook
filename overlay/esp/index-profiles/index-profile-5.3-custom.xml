@@ -1,0 +1,359 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE index-profile SYSTEM "index-profile-5.3.dtd">
+
+<index-profile name="default">
+
+  <!-- Flat fields. -->
+  <field-list sort-xnear-stop-word-threshold="2E8">
+
+    <!-- Standard fields. -->
+    <field name="title" fullsort="yes" tokenize="auto" result="dynamic" fallback-ref="title">
+      <vectorize default="10:0"/>
+    </field>
+    <field name="body" tokenize="auto" max-index-size="8192" max-result-size="1024" fallback-ref="teaser" result="dynamic" index="no">
+      <vectorize default="5:5" alternative="{ko,zh,szh,tzh}:5:0"/>
+    </field>
+    <field name="teaser" index="no"/>
+    <field name="headings" tokenize="auto"/>
+    <field name="description" element-name="meta_description" tokenize="auto" result="no"/>
+    <field name="anchortext" tokenize="auto" result="no"/>
+    <field name="keywords" element-name="meta_keywords" tokenize="auto" result="no"/>
+    <field name="contenttype" element-name="mime"/>
+    <field name="format" boundary-match="yes"/>
+    <field name="language"/>
+    <field name="languages" separator=";"/>
+    <field name="charset"/>
+    <field name="urls"/>
+    <field name="url" index="no"/>
+    <field name="domain" element-name="url.domain" result="no"/>
+    <field name="tld" element-name="url.tld" result="no"/>
+    <field name="path" element-name="url.path" result="no"/>
+    <field name="urlkeywords" element-name="url.keywords" result="no"/>
+    <field name="crawltime" type="datetime" fullsort="yes"/>
+    <field name="processingtime" type="datetime" fullsort="yes"/>
+    <field name="docdatetime" type="datetime" fullsort="yes"/>
+    <field name="size" type="int32" fullsort="yes"/>
+    <field name="docvector" index="no"/>
+
+    <!-- Standard fields, generic placeholders. -->
+    <field name="generic1"/>
+    <field name="generic2"/>
+    <field name="generic3"/>
+    <field name="generic4" result="no"/>
+    <field name="igeneric1" type="int32" fullsort="yes"/>
+    <field name="igeneric2" type="int32" fullsort="yes"/>
+    <field name="dtgeneric1" type="datetime" fullsort="yes"/>
+    <field name="dtgeneric2" type="datetime" fullsort="yes"/>
+
+    <!-- Fields required for Security Access Manager SAM (secure search). -->
+    <field name="docacl" />
+    <field name="docaclsystemid" /> 
+
+    <!-- Entity extraction placeholders. -->
+    <field name="companies" separator=";"/>
+    <field name="locations" separator=";"/>
+    <field name="personnames" separator=";"/>
+    <field name="concepts" separator=";" element-name="docvector_navigator"/>
+    <field name="emails" separator=";"/>
+    <field name="taxonomy" separator="#"/>
+
+    <!-- Entity teaser generation. -->
+    <field name="companyteaser" index="no"/>
+    <field name="locationteaser" index="no"/>
+    <field name="personnameteaser" index="no"/>
+
+    <!-- Structural analyis placeholders (STAN). -->
+    <field name="stantitle"/>
+    <field name="stanaddress"/>
+    <field name="standate"/>
+    <field name="stanauthor"/>
+    <field name="stantext"/>
+    <field name="stangeneric1"/>
+    <field name="stangeneric2"/>
+
+    <!-- Phonetic search fields. -->
+    <field name="phonetic1"/>
+    <field name="phonetic2"/>
+    <field name="phonetic3"/>
+    <field name="phonetic4"/>
+
+    <!-- Hit-Highlighting fields -->
+    <field name="documentid" result="no"/>
+    <field name="viewsourceurl" index="no"/>
+    <field name="htmlsource" index="no" result="dynamic" default-result="no"
+           max-result-size="16384" fallback-ref="htmlsource" />
+
+  </field-list>
+
+  <!-- Scope fields. -->
+  <scope-field-list>
+    <scope-field name="xml" result="dynamic"/>
+  </scope-field-list>
+
+  <!-- Standard composite field. -->
+  <composite-field name="content" default="yes" query-tokenize="auto">
+    <field-ref name="title" level="4" field-separation-length="256"/>
+    <field-ref name="body" level="1" field-separation-length="256"/>
+    <field-ref name="description" level="2" field-separation-length="256"/>
+    <field-ref name="urlkeywords" level="3" field-separation-length="256"/>
+    <field-ref name="keywords" level="3" field-separation-length="256"/>
+    <field-ref name="anchortext" type="external" level="5" field-separation-length="256"/>
+  </composite-field>
+  
+  <!-- Composite field used for phonetic ranking; not to be used directly -->
+  <composite-field name="phonetic" default="no" query-tokenize="auto">
+    <field-ref name="phonetic1" level="4"/>
+    <field-ref name="phonetic2" level="3"/>
+    <field-ref name="phonetic3" level="2"/>
+    <field-ref name="phonetic4" level="1"/>
+  </composite-field>
+
+  <!-- Rank profiles. -->
+  <rank-profile name="default" rank-model="default" default="yes"
+                stop-word-threshold="2E6"
+                position-stop-word-threshold="2E7">
+    <authority weight="50" field-ref="anchortext"/>
+    <freshness weight="0" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="50" />
+      <context weight="50">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+  </rank-profile>
+
+  <rank-profile name="default100" rank-model="default" default="no"
+                stop-word-threshold="1E8"
+                position-stop-word-threshold="1E8">
+    <authority weight="50" field-ref="anchortext"/>
+    <freshness weight="0" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="50" />
+      <context weight="50">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+  </rank-profile>
+
+  <rank-profile name="highqps" rank-model="default" default="no"
+                stop-word-threshold="1E6"
+                position-stop-word-threshold="2E6">
+    <authority weight="50" field-ref="anchortext"/>
+    <freshness weight="0" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="50" />
+      <context weight="50">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+  </rank-profile>
+
+  <rank-profile name="news" rank-model="news" default="no"
+                stop-word-threshold="2E6"
+                position-stop-word-threshold="2E7">
+    <authority weight="50" field-ref="anchortext"/>
+    <freshness weight="200" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="50" />
+      <context weight="50">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+  </rank-profile>
+
+  <rank-profile name="site" rank-model="site" default="no"
+                stop-word-threshold="2E6"
+                position-stop-word-threshold="2E7">
+    <authority weight="70" field-ref="anchortext"/>
+    <freshness weight="0" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="60" />
+      <context weight="70">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+  </rank-profile>
+
+  <rank-profile name="ecommerce" rank-model="ecommerce" default="no"
+                stop-word-threshold="2E6"
+                position-stop-word-threshold="2E7">
+    <authority weight="50" field-ref="anchortext"/>
+    <freshness weight="0" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="50" />
+      <context weight="50">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+  </rank-profile>
+
+  <rank-profile name="yellowpages" rank-model="contextboost" default="no"
+                stop-word-threshold="2E6"
+                position-stop-word-threshold="2E7">
+    <authority weight="0" field-ref="anchortext"/>
+    <freshness weight="0" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="0" />
+      <context weight="100">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+  </rank-profile>
+
+  <!-- Rank profile for scope search. -->
+  <rank-profile name="scopedefault" rank-model="scopedefault" default="no"
+                stop-word-threshold="2E6"
+                position-stop-word-threshold="2E7">
+    <authority weight="50" field-ref="anchortext"/>
+    <freshness weight="0" field-ref="docdatetime" auto="yes"/>
+    <composite-rank composite-field-ref="content">
+      <proximity weight="50" />
+      <context weight="50">
+	<field-weight field-ref="body" value="5"/>
+	<field-weight field-ref="description" value="30"/>
+	<field-weight field-ref="urlkeywords" value="40"/>
+	<field-weight field-ref="keywords" value="50"/>
+	<field-weight field-ref="title" value="60"/>
+      </context>
+    </composite-rank>
+    <scope-rank scope-field-ref="xml" weight="50">
+      <proximity weight="50" />
+      <context weight="50" />
+    </scope-rank>
+  </rank-profile>
+
+  <!-- Result processing specifications.-->
+  <result-specification>
+
+    <!-- Document clustering. -->
+    <clustering name="default" hits="100" sort-by="none">
+      <field-ref name="docvector"/>
+      <supervised-clustering>
+        <field-ref name="taxonomy"/>
+      </supervised-clustering>
+      <unsupervised-clustering threshold="0.05" depth="2" labels="2" join="no"/>
+    </clustering>
+
+    <!-- Navigators. -->
+    <numeric-navigator name="sizenavigator" display="Size" unit="kB" divisor="1024" intervals="4" resolution="1024">
+      <field-ref name="size"/>
+      <range-label type="first" format="Less than %.0f"/>
+      <range-label type="middle" format="Between %.0f and %.0f"/>
+      <range-label type="last" format="More than %.0f"/>
+      <ignore-value value="0"/>
+    </numeric-navigator>
+
+    <numeric-navigator name="docdatetimenavigator" display="Timestamp" intervals="4" resolution="1440">
+      <field-ref name="docdatetime"/>
+      <range-label type="first" format="Before %.10s"/>
+      <range-label type="middle" format="Between %.10s and %.10s"/>
+      <range-label type="last" format="%.10s or after"/>
+    </numeric-navigator>
+
+    <string-navigator name="languagesnavigator" display="Language">
+      <field-ref name="languages"/>
+    </string-navigator>
+
+    <string-navigator name="companiesnavigator" display="Companies">
+      <field-ref name="companies"/>
+    </string-navigator>
+
+    <string-navigator name="locationsnavigator" display="Locations">
+      <field-ref name="locations"/>
+    </string-navigator>
+
+    <string-navigator name="personnamesnavigator" display="People">
+      <field-ref name="personnames"/>
+    </string-navigator>
+
+    <string-navigator name="keywordsnavigator" display="Keywords">
+      <field-ref name="concepts"/>
+    </string-navigator>
+
+    <string-navigator name="emailsnavigator" display="Emails">
+      <field-ref name="emails"/>
+    </string-navigator>
+
+    <string-navigator name="formatnavigator" display="Formats">
+      <field-ref name="format"/>
+    </string-navigator>
+
+    <string-navigator name="taxonomynavigator" display="Taxonomy" anchoring="prefix" sort-by="name" sort-order="ascending">
+      <field-ref name="taxonomy"/>
+    </string-navigator>
+
+    <!-- Navigator placeholders, used for aggregating over matching scopes. -->
+    <string-navigator name="scopenavigator0" display="Scope 0" deep="no" passive="yes" anchoring="none"
+                      matcher="etc/resources/matching/scopenavigator.xml">
+      <field-ref name="xml"/>
+    </string-navigator>
+
+    <string-navigator name="scopenavigator1" display="Scope 1" deep="no" passive="yes" anchoring="none"
+                      matcher="etc/resources/matching/scopenavigator.xml" use-quotes="always">
+      <field-ref name="xml"/>
+    </string-navigator>
+
+    <string-navigator name="scopenavigator2" display="Scope 2" deep="no" passive="yes" anchoring="none"
+                      matcher="etc/resources/matching/scopenavigator.xml" use-quotes="always">
+      <field-ref name="xml"/>
+    </string-navigator>
+
+    <string-navigator name="scopenavigator3" display="Scope 3" deep="no" passive="yes" anchoring="none"
+                      matcher="etc/resources/matching/scopenavigator.xml" use-quotes="always">
+      <field-ref name="xml"/>
+    </string-navigator>
+
+    <string-navigator name="scopenavigator4" display="Scope 4" deep="no" passive="yes" anchoring="none"
+                      matcher="etc/resources/matching/scopenavigator.xml" use-quotes="always">
+      <field-ref name="xml"/>
+    </string-navigator>
+
+    <string-navigator name="scopenavigator5" display="Scope 5" deep="no" passive="yes" anchoring="none"
+                      matcher="etc/resources/matching/scopenavigator.xml" use-quotes="always">
+      <field-ref name="xml"/>
+    </string-navigator>
+
+    <!-- Result views. -->
+    <result-view name="urls">
+      <field-ref name="url"/>
+      <field-ref name="urls"/>
+    </result-view>
+
+    <!-- Result view for Hit-Highlighting -->
+    <result-view name="htmlsource">
+      <field-ref name="htmlsource"/>
+      <field-ref name="url"/>
+    </result-view>
+
+  </result-specification>
+
+</index-profile>

@@ -1,0 +1,27 @@
+This folder contains files from ESP setup + additional OpenSource libraries, 
+which needs 3rd party open source libraries (see data/manifest.xml for download sources)
+
+---part of setup_WindowsNT.zip
+binaries.zip
+config.esp.zip
+dictionaries.zip
+esp4j.zip
+etc.zip
+manifest-1.0.1.dtd
+manifest-1.0.2.dtd
+manifest-1.0.3.dtd
+manifest-1.0.dtd
+manifest.xml
+
+----additional downloaded OpenSource libs
+c3p0-0.9.1.2.bin.zip
+hibernate-3.0.5.zip
+iconv-1.9.2.17-win32-cl13.10.zip
+JacORB_2_2_1-compact.zip
+nux-1.3.zip
+omniorb-4.0.7.9-win32-cl13.10.zip
+omniorb-py-2.6.22-win32-cl13.10.zip
+rhino1_6R5.zip
+wsdl4j-bin-1.5.2.zip
+x40_xc028b_z1.zip
+xxl_1_0.zip
