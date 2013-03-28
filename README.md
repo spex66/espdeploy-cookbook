@@ -9,6 +9,10 @@ In fact I haven't touched the ESP UI-installer since 2007, but reused my XML con
 
 Maybe a bit late, but this cookbook should demystifies ESPDeploy as an 'expert' level tool.
 
+Go for the Wiki pages and check the recipes out.
+Please give feedbacks on your experiences with that recipes and for which of your real world use-cases you want to have a recipe.
+
+
 History
 =======
 Initially it was programmed by FAST Professional Services for Professional Services to ease the day to day work.
