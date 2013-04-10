@@ -1,3 +1,11 @@
+Please join the discussion about this project on LinkedIn 'FAST ESP' group and share your feedback. 
+
+What feedback? 
+* Can you follow this steps?
+* Your interest and use cases in more chapters (I want write for my own, but for your benefit :))
+
+Thank you
+
 espdeploy-cookbook
 ==================
 
